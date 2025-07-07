@@ -12,8 +12,8 @@ import datetime
 
 def main():
     set_seeds()
-    train_gen, val_gen = get_data_generators()
-    model, history = train_model(train_gen, val_gen)
+    train_gen, val_gen, class_weights = get_data_generators()
+    model, history = train_model(train_gen, val_gen, class_weights)
 
     print(f"\n✅ Model training complete. Saved to {MODEL_SAVE_PATH}")
 
