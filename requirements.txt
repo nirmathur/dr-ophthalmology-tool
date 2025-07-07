@@ -1,0 +1,7 @@
+
+tensorflow>=2.8.0
+pandas
+numpy
+matplotlib
+opencv-python
+scikit-learn
