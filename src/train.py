@@ -1,11 +1,13 @@
 
 # train.py
 
+import os
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from src.model import build_model
 from src.config import IMAGE_SIZE, MODEL_SAVE_PATH, EPOCHS
 
-def train_model(train_gen, val_gen):
+def train_model(train_gen, val_gen, class_weights=None):
+    os.makedirs(os.path.dirname(MODEL_SAVE_PATH), exist_ok=True)
     model = build_model(IMAGE_SIZE)
 
     callbacks = [
@@ -18,7 +20,8 @@ def train_model(train_gen, val_gen):
         train_gen,
         validation_data=val_gen,
         epochs=EPOCHS,
-        callbacks=callbacks
+        callbacks=callbacks,
+        class_weight=class_weights,
     )
 
     return model, history
