@@ -7,11 +7,17 @@ import os
 # Base dataset directory
 DATA_DIR = os.path.join("data", "aptos2019-blindness-detection")
 
-TRAIN_IMG_DIR = os.path.join(DATA_DIR, "train_images").replace("\\", "/")
-TEST_IMG_DIR = os.path.join(DATA_DIR, "test_images").replace("\\", "/")
-TRAIN_CSV_PATH = os.path.join(DATA_DIR, "train.csv").replace("\\", "/")
-TEST_CSV_PATH = os.path.join(DATA_DIR, "test.csv").replace("\\", "/")
-MODEL_SAVE_PATH = os.path.join("model_output", "best_model.h5").replace("\\", "/")
+# Training data
+TRAIN_IMG_DIR = os.path.join(DATA_DIR, "train_images")
+TRAIN_CSV_PATH = os.path.join(DATA_DIR, "train.csv")
+
+# Model output
+MODEL_DIR = "model_output"
+MODEL_SAVE_PATH = os.path.join(MODEL_DIR, "best_model.h5")
+
+# Ensure required directories exist
+for directory in [TRAIN_IMG_DIR, MODEL_DIR]:
+    os.makedirs(directory, exist_ok=True)
 
 # Image settings
 IMAGE_SIZE = (380, 380)

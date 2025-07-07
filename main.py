@@ -4,13 +4,14 @@
 from src.data_loader import get_data_generators
 from src.train import train_model
 from src.evaluate import get_last_conv_layer_name, make_gradcam_heatmap, display_gradcam
-from src.config import TRAIN_IMG_DIR, MODEL_SAVE_PATH
-import os
+from src.config import MODEL_SAVE_PATH
+from src.utils import set_seeds
 import numpy as np
 from tensorflow.keras.preprocessing import image
 import datetime
 
 def main():
+    set_seeds()
     train_gen, val_gen = get_data_generators()
     model, history = train_model(train_gen, val_gen)
 
