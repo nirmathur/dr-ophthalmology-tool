@@ -3,6 +3,7 @@
 
 from tensorflow.keras.applications import EfficientNetB3
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, BatchNormalization
+from tensorflow.keras.regularizers import l2
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.metrics import AUC, Precision, Recall
@@ -15,10 +16,10 @@ def build_model(image_size, num_classes=5):
 
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
-    x = Dense(128, activation='relu')(x)
+    x = Dense(128, activation='relu', kernel_regularizer=l2(1e-4))(x)
     x = Dropout(0.5)(x)
     x = BatchNormalization()(x)
-    output = Dense(num_classes, activation='softmax', dtype='float32')(x)
+    output = Dense(num_classes, activation='softmax', dtype='float32', kernel_regularizer=l2(1e-4))(x)
 
     model = Model(inputs=base_model.input, outputs=output)
     model.compile(

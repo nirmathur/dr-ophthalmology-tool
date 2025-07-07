@@ -38,11 +38,24 @@ python main.py
 ```
 
 ## Highlights
-- EfficientNetB3 with frozen base
+- EfficientNetB3 with frozen base and optional fine-tuning
+- L2 regularization and dropout to reduce overfitting
 - Mixed precision training
 - Augmented image generators
 - Automatic dataset sanity checks and class-weighted training
+- TensorBoard logs under `logs/`
 - Grad-CAM explainability
+
+After the first training phase the last 20 layers of EfficientNetB3 are unfrozen and
+the model trains a few extra epochs with a smaller learning rate. Training and
+validation metrics are written to `logs/<timestamp>/training_log.csv` so you can
+visualize them in TensorBoard.
+
+To evaluate a saved model on a separate test set, run:
+
+```bash
+python -m src.eval_model
+```
 
 ## Reproducibility
 Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds` which is called inside `main.py`.

@@ -23,3 +23,11 @@ for directory in [TRAIN_IMG_DIR, MODEL_DIR]:
 IMAGE_SIZE = (380, 380)
 BATCH_SIZE = 32
 EPOCHS = 50
+
+# Fine-tuning settings
+FINE_TUNE_EPOCHS = 10
+FINE_TUNE_LR = 1e-5
+
+# Test data (used by evaluation script)
+TEST_IMG_DIR = os.path.join(DATA_DIR, "test_images")
+TEST_CSV_PATH = os.path.join(DATA_DIR, "test.csv")
