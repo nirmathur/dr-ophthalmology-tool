@@ -3,20 +3,20 @@
 
 This repository uses **EfficientNetB3 + Grad-CAM** to classify retinal images from the APTOS 2019 blindness detection dataset.
 
-## 🔧 Setup
+## Setup
 Update these paths in `config.py`:
 - TRAIN_IMG_DIR
 - TEST_IMG_DIR
 - TRAIN_CSV_PATH
 - TEST_CSV_PATH
 
-## 🚀 Run
+## Run
 
 ```bash
 python main.py
 ```
 
-## 🧠 Highlights
+## Highlights
 - EfficientNetB3 with frozen base
 - Mixed precision training
 - Augmented image generators
