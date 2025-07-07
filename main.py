@@ -3,12 +3,17 @@
 
 from src.data_loader import get_data_generators
 from src.train import train_model
-from src.evaluate import get_last_conv_layer_name, make_gradcam_heatmap, display_gradcam
+from src.evaluate import (
+    get_last_conv_layer_name,
+    make_gradcam_heatmap,
+    save_gradcam,
+)
 from src.config import MODEL_SAVE_PATH
 from src.utils import set_seeds
 import numpy as np
 from tensorflow.keras.preprocessing import image
 import datetime
+import os
 
 def main():
     set_seeds()
@@ -31,7 +36,8 @@ def main():
 
     last_conv = get_last_conv_layer_name(model)
     heatmap = make_gradcam_heatmap(img_array, model, last_conv)
-    display_gradcam(sample_img, heatmap)
+    os.makedirs("sample_gradcam", exist_ok=True)
+    save_gradcam(sample_img, heatmap, os.path.join("sample_gradcam", "sample_gradcam.png"))
 
 if __name__ == "__main__":
     main()

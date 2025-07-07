@@ -41,6 +41,32 @@ def display_gradcam(img_path, heatmap, alpha=0.4):
     plt.axis('off')
     plt.show()
 
+def save_gradcam(img_path, heatmap, output_path, alpha=0.4):
+    """Save Grad-CAM overlay to disk."""
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
+    heatmap = np.uint8(255 * heatmap)
+    heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
+    superimposed_img = cv2.addWeighted(img, 1 - alpha, heatmap, alpha, 0)
+    cv2.imwrite(output_path, cv2.cvtColor(superimposed_img, cv2.COLOR_RGB2BGR))
+
+def generate_and_save_gradcam(model, img_paths, output_dir, last_conv_layer_name=None):
+    """Generate Grad-CAM overlays for a list of image paths."""
+    os.makedirs(output_dir, exist_ok=True)
+    if last_conv_layer_name is None:
+        last_conv_layer_name = get_last_conv_layer_name(model)
+    for img_path in img_paths:
+        img = image.load_img(img_path, target_size=model.input_shape[1:3])
+        img_array = image.img_to_array(img) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
+        preds = model.predict(img_array)
+        pred_label = np.argmax(preds[0])
+        heatmap = make_gradcam_heatmap(img_array, model, last_conv_layer_name, pred_label)
+        base_name = os.path.splitext(os.path.basename(img_path))[0]
+        out_path = os.path.join(output_dir, f"{base_name}_gradcam.png")
+        save_gradcam(img_path, heatmap, out_path)
+
 def get_last_conv_layer_name(model):
     for layer in reversed(model.layers):
         if isinstance(layer, tf.keras.layers.Conv2D):

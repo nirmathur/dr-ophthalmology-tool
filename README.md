@@ -57,5 +57,21 @@ To evaluate a saved model on a separate test set, run:
 python -m src.eval_model
 ```
 
+### Grad-CAM Visualization
+
+Generate Grad-CAM overlays for arbitrary images or entire folders:
+
+```bash
+python -m src.generate_gradcam path/to/image1.png path/to/folder --output gradcam_output
+```
+
+### Report Generation
+
+After running `eval_model` you can compile an HTML (or PDF) report combining the evaluation metrics and Grad-CAM samples:
+
+```bash
+python -m src.report_generator evaluation/ gradcam_output --html report.html --pdf report.pdf
+```
+
 ## Reproducibility
 Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds` which is called inside `main.py`.
