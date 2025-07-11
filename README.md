@@ -1,17 +1,15 @@
 
 # Diabetic Retinopathy Detection (Image-Based)
 
-This project began as a competition submission, but it’s grown into something more meaningful.
+This project started as a competition submission, but it's grown into something I believe actually fills a gap in how we build AI for healthcare.
 
-It’s now a lightweight, modular AI pipeline designed to help clinicians experiment with, understand, and adapt DR detection models for their patient populations. Built with open tools and explainability at its core, it’s a rebuttal to the idea that AI in healthcare must be a black box.
+It’s a lightweight, modular pipeline for diabetic retinopathy detection — built not for the cloud, but for real clinicians, students, and researchers who want to understand what their model is doing. It trains fast, runs locally, and shows its work through Grad-CAM explainability.
 
- It trains fast.
- It shows why it made its decision (Grad-CAM).
- It can be adapted to different datasets, populations, and resource settings.
+Most DR models today are either black-box systems trained on massive datasets with enormous compute, or academic projects that never leave the paper. This tool is neither. It's designed to be used, tweaked, criticised, and trusted — especially by those in under-resourced settings who don’t have the infrastructure to fine-tune Google-scale models.
 
-This isn’t meant to replace state-of-the-art systems like Google’s. It’s for researchers, students, and clinicians who want a transparent, hands-on foundation for retinal AI  and the ability to customise, critique, and deploy it on their terms.
+Millions of people in rural or underserved regions still lose their vision due to late DR detection. This repo is a bet that more transparent, portable, and clinician-guided tools could help change that. It's not trying to beat state-of-the-art — it's trying to democratise it.
 
-This repository uses **EfficientNetB3 + Grad-CAM** to classify retinal images from the APTOS 2019 blindness detection dataset.
+Built with EfficientNetB3 and Grad-CAM, it’s ready to run on the APTOS 2019 dataset — or any local dataset you want to try it on.
 
 ## Dataset
 Download the [APTOS 2019 Blindness Detection](https://www.kaggle.com/c/aptos2019-blindness-detection/data) dataset from Kaggle.
