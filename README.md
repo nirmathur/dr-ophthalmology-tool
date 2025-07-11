@@ -73,5 +73,27 @@ After running `eval_model` you can compile an HTML (or PDF) report combining the
 python -m src.report_generator evaluation/ gradcam_output --html report.html --pdf report.pdf
 ```
 
+## Command Line Interface
+Run training, evaluation or inference via a unified CLI:
+
+```bash
+python -m src.cli train --epochs 30
+python -m src.cli evaluate --output-dir evaluation
+python -m src.cli predict images/*.png --output predictions
+```
+
+
 ## Reproducibility
 Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds` which is called inside `main.py`.
+
+## Docker
+Build the image and run the API server:
+
+```bash
+docker build -t dr-app .
+docker run -p 8000:8000 dr-app
+```
+
+## API Usage
+The server exposes a `/predict` endpoint. Submit an eye image via `POST` and
+receive the predicted grade along with a Grad-CAM overlay encoded as base64.
