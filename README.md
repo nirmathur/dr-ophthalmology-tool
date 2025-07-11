@@ -1,6 +1,16 @@
 
 # Diabetic Retinopathy Detection (Image-Based)
 
+This project began as a competition submission, but it’s grown into something more meaningful.
+
+It’s now a lightweight, modular AI pipeline designed to help clinicians experiment with, understand, and adapt DR detection models for their patient populations. Built with open tools and explainability at its core, it’s a rebuttal to the idea that AI in healthcare must be a black box.
+
+ It trains fast.
+ It shows why it made its decision (Grad-CAM).
+ It can be adapted to different datasets, populations, and resource settings.
+
+This isn’t meant to replace state-of-the-art systems like Google’s. It’s for researchers, students, and clinicians who want a transparent, hands-on foundation for retinal AI  and the ability to customise, critique, and deploy it on their terms.
+
 This repository uses **EfficientNetB3 + Grad-CAM** to classify retinal images from the APTOS 2019 blindness detection dataset.
 
 ## Dataset
@@ -29,7 +39,7 @@ pip install -r requirements.txt
 ```
 
 All important paths are defined in `src/config.py`. Adjust them only if you store the dataset in a different location.
-Training outputs will be written to `model_output/` which is created automatically.
+Training outputs will be written to `model_output/`, which is created automatically.
 
 ## Run
 
@@ -39,17 +49,17 @@ python main.py
 
 ## Highlights
 - EfficientNetB3 with frozen base and optional fine-tuning
-- L2 regularization and dropout to reduce overfitting
+- L2 regularisation and dropout to reduce overfitting
 - Mixed precision training
 - Augmented image generators
 - Automatic dataset sanity checks and class-weighted training
 - TensorBoard logs under `logs/`
 - Grad-CAM explainability
 
-After the first training phase the last 20 layers of EfficientNetB3 are unfrozen and
+After the first training phase, the last 20 layers of EfficientNetB3 are unfrozen, and
 the model trains a few extra epochs with a smaller learning rate. Training and
 validation metrics are written to `logs/<timestamp>/training_log.csv` so you can
-visualize them in TensorBoard.
+visualise them in TensorBoard.
 
 To evaluate a saved model on a separate test set, run:
 
@@ -57,7 +67,7 @@ To evaluate a saved model on a separate test set, run:
 python -m src.eval_model
 ```
 
-### Grad-CAM Visualization
+### Grad-CAM Visualisation
 
 Generate Grad-CAM overlays for arbitrary images or entire folders:
 
@@ -67,7 +77,7 @@ python -m src.generate_gradcam path/to/image1.png path/to/folder --output gradca
 
 ### Report Generation
 
-After running `eval_model` you can compile an HTML (or PDF) report combining the evaluation metrics and Grad-CAM samples:
+After running `eval_model`, you can compile an HTML (or PDF) report combining the evaluation metrics and Grad-CAM samples:
 
 ```bash
 python -m src.report_generator evaluation/ gradcam_output --html report.html --pdf report.pdf
@@ -84,7 +94,7 @@ python -m src.cli predict images/*.png --output predictions
 
 
 ## Reproducibility
-Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds` which is called inside `main.py`.
+Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds`, which is called inside `main.py`.
 
 ## Docker
 Build the image and run the API server:
