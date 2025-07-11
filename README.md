@@ -11,6 +11,8 @@ Millions of people in under-resourced regions still lose vision from late-stage 
 
 Built with EfficientNetB3 and Grad-CAM, it runs on the APTOS 2019 dataset out of the box, but can be adapted to any local dataset or workflow.
 
+The notebook contains the original code I used when building and training the model on Google Colab.
+
 
 
 ## Dataset
