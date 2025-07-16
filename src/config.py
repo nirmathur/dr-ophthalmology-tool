@@ -4,8 +4,10 @@
 # File paths
 import os
 
-# Base dataset directory
-DATA_DIR = os.path.join("data", "aptos2019-blindness-detection")
+# Base dataset directory. Allows overriding via the DATA_DIR environment variable
+DATA_DIR = os.getenv(
+    "DATA_DIR", os.path.join("data", "aptos2019-blindness-detection")
+)
 
 # Training data
 TRAIN_IMG_DIR = os.path.join(DATA_DIR, "train_images")
