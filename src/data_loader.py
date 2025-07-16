@@ -21,8 +21,17 @@ def random_crop_and_color(img):
     return img
 
 
-def get_data_generators():
-    train_df = validate_dataset(TRAIN_CSV_PATH, TRAIN_IMG_DIR)
+def get_data_generators(skip_missing: bool = False):
+    """Return training/validation data generators and class weights.
+
+    When ``skip_missing`` is ``True``, any entries pointing to missing image
+    files are ignored instead of raising an error.
+    """
+    train_df = validate_dataset(
+        TRAIN_CSV_PATH,
+        TRAIN_IMG_DIR,
+        drop_missing=skip_missing,
+    )
     train_df['diagnosis'] = train_df['diagnosis'].astype(str)
 
     train_df, val_df = train_test_split(
