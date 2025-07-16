@@ -29,7 +29,9 @@ data/
 
 Place the dataset under `data/aptos2019-blindness-detection` so the paths in `src/config.py` work out of the box.
 The training script performs a sanity check at startup and will raise helpful
-errors if `train.csv` or any of the referenced images are missing.
+errors if `train.csv` or any of the referenced images are missing. If you store
+the data elsewhere, you can export a `DATA_DIR` environment variable so the
+scripts know where to find it, e.g. `export DATA_DIR=/path/to/dataset`.
 
 ## Setup
 Create a virtual environment and install the dependencies:
@@ -95,7 +97,7 @@ python -m src.cli predict images/*.png --output predictions
 ```
 
 ### Custom dataset directory
-The CLI looks for the dataset under `data/aptos2019-blindness-detection` by default. If your images and CSV files live elsewhere – for example on a mounted Google Drive path – use the `--data-dir` flag to override the location:
+The CLI looks for the dataset under `data/aptos2019-blindness-detection` by default. If your images and CSV files live elsewhere – for example on a mounted Google Drive path – use the `--data-dir` flag to override the location or set the `DATA_DIR` environment variable:
 
 ```bash
 python -m src.cli train \
@@ -103,7 +105,14 @@ python -m src.cli train \
   --epochs 30
 ```
 
-The same option is available for `evaluate` and `predict` so you can keep the dataset outside the project folder.
+Instead of passing the flag each time, you can export `DATA_DIR` in your shell:
+
+```bash
+export DATA_DIR=/content/drive/MyDrive/aptos2019-blindness-detection
+python -m src.cli train
+```
+
+The same flag is available for `evaluate` and `predict`, or you can keep `DATA_DIR` exported so the dataset stays outside the project folder.
 
 
 ## Reproducibility
