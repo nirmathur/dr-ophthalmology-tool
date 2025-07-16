@@ -5,16 +5,16 @@ import os
 from datetime import datetime
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau, TensorBoard, CSVLogger
 from src.model import build_model
-from src.config import IMAGE_SIZE, MODEL_SAVE_PATH, EPOCHS, FINE_TUNE_EPOCHS, FINE_TUNE_LR
+from src import config
 
 def train_model(train_gen, val_gen, class_weights=None):
-    os.makedirs(os.path.dirname(MODEL_SAVE_PATH), exist_ok=True)
-    model = build_model(IMAGE_SIZE)
+    os.makedirs(os.path.dirname(config.MODEL_SAVE_PATH), exist_ok=True)
+    model = build_model(config.IMAGE_SIZE)
 
     log_dir = os.path.join("logs", datetime.now().strftime("%Y%m%d-%H%M%S"))
     callbacks = [
         EarlyStopping(patience=10, restore_best_weights=True),
-        ModelCheckpoint(MODEL_SAVE_PATH, save_best_only=True),
+        ModelCheckpoint(config.MODEL_SAVE_PATH, save_best_only=True),
         ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=3, min_lr=1e-6),
         TensorBoard(log_dir=log_dir),
         CSVLogger(os.path.join(log_dir, "training_log.csv"))
@@ -23,7 +23,7 @@ def train_model(train_gen, val_gen, class_weights=None):
     history = model.fit(
         train_gen,
         validation_data=val_gen,
-        epochs=EPOCHS,
+        epochs=config.EPOCHS,
         callbacks=callbacks,
         class_weight=class_weights,
     )
@@ -33,7 +33,7 @@ def train_model(train_gen, val_gen, class_weights=None):
     for layer in base_model.layers[-20:]:
         layer.trainable = True
     model.compile(
-        optimizer=Adam(learning_rate=FINE_TUNE_LR),
+        optimizer=Adam(learning_rate=config.FINE_TUNE_LR),
         loss='categorical_crossentropy',
         metrics=['accuracy', AUC(), Precision(), Recall()]
     )
@@ -41,7 +41,7 @@ def train_model(train_gen, val_gen, class_weights=None):
     ft_history = model.fit(
         train_gen,
         validation_data=val_gen,
-        epochs=FINE_TUNE_EPOCHS,
+        epochs=config.FINE_TUNE_EPOCHS,
         callbacks=callbacks,
         class_weight=class_weights,
     )

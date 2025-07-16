@@ -6,31 +6,31 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, classification_report, roc_curve, auc
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import load_model
-from src.config import IMAGE_SIZE, MODEL_SAVE_PATH, TEST_CSV_PATH, TEST_IMG_DIR
+from src import config
 import itertools
 
 
 def evaluate_model(output_dir="evaluation"):
-    if not os.path.exists(MODEL_SAVE_PATH):
-        raise FileNotFoundError(f"Model file not found: {MODEL_SAVE_PATH}")
+    if not os.path.exists(config.MODEL_SAVE_PATH):
+        raise FileNotFoundError(f"Model file not found: {config.MODEL_SAVE_PATH}")
 
     os.makedirs(output_dir, exist_ok=True)
-    df = pd.read_csv(TEST_CSV_PATH)
+    df = pd.read_csv(config.TEST_CSV_PATH)
     df['filename'] = df['id_code'].astype(str) + '.png'
 
     datagen = ImageDataGenerator(rescale=1./255)
     test_gen = datagen.flow_from_dataframe(
         dataframe=df,
-        directory=TEST_IMG_DIR,
+        directory=config.TEST_IMG_DIR,
         x_col='filename',
         y_col='diagnosis',
-        target_size=IMAGE_SIZE,
+        target_size=config.IMAGE_SIZE,
         batch_size=32,
         class_mode='categorical',
         shuffle=False
     )
 
-    model = load_model(MODEL_SAVE_PATH)
+    model = load_model(config.MODEL_SAVE_PATH)
     preds = model.predict(test_gen)
     y_true = test_gen.classes
     y_pred = np.argmax(preds, axis=1)

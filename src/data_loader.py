@@ -8,14 +8,14 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from src.config import TRAIN_IMG_DIR, TRAIN_CSV_PATH, IMAGE_SIZE, BATCH_SIZE
+from src import config
 from src.utils import validate_dataset
 
 def random_crop_and_color(img):
     crop_h = tf.cast(tf.shape(img)[0] * 0.9, tf.int32)
     crop_w = tf.cast(tf.shape(img)[1] * 0.9, tf.int32)
     img = tf.image.random_crop(img, size=[crop_h, crop_w, 3])
-    img = tf.image.resize(img, IMAGE_SIZE)
+    img = tf.image.resize(img, config.IMAGE_SIZE)
     img = tf.image.random_brightness(img, 0.05)
     img = tf.image.random_contrast(img, 0.9, 1.1)
     return img
@@ -28,8 +28,8 @@ def get_data_generators(skip_missing: bool = False):
     files are ignored instead of raising an error.
     """
     train_df = validate_dataset(
-        TRAIN_CSV_PATH,
-        TRAIN_IMG_DIR,
+        config.TRAIN_CSV_PATH,
+        config.TRAIN_IMG_DIR,
         drop_missing=skip_missing,
     )
     train_df['diagnosis'] = train_df['diagnosis'].astype(str)
@@ -58,21 +58,21 @@ def get_data_generators(skip_missing: bool = False):
 
     train_generator = train_datagen.flow_from_dataframe(
         dataframe=train_df,
-        directory=TRAIN_IMG_DIR,
+        directory=config.TRAIN_IMG_DIR,
         x_col='filename',
         y_col='diagnosis',
-        target_size=IMAGE_SIZE,
-        batch_size=BATCH_SIZE,
+        target_size=config.IMAGE_SIZE,
+        batch_size=config.BATCH_SIZE,
         class_mode='categorical'
     )
 
     val_generator = val_datagen.flow_from_dataframe(
         dataframe=val_df,
-        directory=TRAIN_IMG_DIR,
+        directory=config.TRAIN_IMG_DIR,
         x_col='filename',
         y_col='diagnosis',
-        target_size=IMAGE_SIZE,
-        batch_size=BATCH_SIZE,
+        target_size=config.IMAGE_SIZE,
+        batch_size=config.BATCH_SIZE,
         class_mode='categorical'
     )
 
