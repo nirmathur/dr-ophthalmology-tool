@@ -94,6 +94,17 @@ python -m src.cli evaluate --output-dir evaluation
 python -m src.cli predict images/*.png --output predictions
 ```
 
+### Custom dataset directory
+The CLI looks for the dataset under `data/aptos2019-blindness-detection` by default. If your images and CSV files live elsewhere – for example on a mounted Google Drive path – use the `--data-dir` flag to override the location:
+
+```bash
+python -m src.cli train \
+  --data-dir /content/drive/MyDrive/aptos2019-blindness-detection \
+  --epochs 30
+```
+
+The same option is available for `evaluate` and `predict` so you can keep the dataset outside the project folder.
+
 
 ## Reproducibility
 Random seeds for NumPy, Python and TensorFlow are set via `src/utils.set_seeds`, which is called inside `main.py`.
