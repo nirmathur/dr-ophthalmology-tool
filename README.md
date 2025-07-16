@@ -29,7 +29,9 @@ data/
 
 Place the dataset under `data/aptos2019-blindness-detection` so the paths in `src/config.py` work out of the box.
 The training script performs a sanity check at startup and will raise helpful
-errors if `train.csv` or any of the referenced images are missing.
+errors if `train.csv` or any of the referenced images are missing. Set
+`skip_missing=True` in `get_data_generators` to silently drop such rows instead
+of stopping with an error.
 
 ## Setup
 Create a virtual environment and install the dependencies:
@@ -54,7 +56,7 @@ python main.py
 - L2 regularisation and dropout to reduce overfitting
 - Mixed precision training
 - Augmented image generators
-- Automatic dataset sanity checks and class-weighted training
+- Automatic dataset sanity checks (optionally skipping missing files) and class-weighted training
 - TensorBoard logs under `logs/`
 - Grad-CAM explainability
 
