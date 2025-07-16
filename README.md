@@ -43,6 +43,9 @@ pip install -r requirements.txt
 All important paths are defined in `src/config.py`. Adjust them only if you store the dataset in a different location.
 Training outputs will be written to `model_output/`, which is created automatically.
 
+### Google Colab
+For step-by-step instructions on running the project in Colab and saving results back to Drive, see [docs/colab_setup.md](docs/colab_setup.md).
+
 ## Run
 
 ```bash
