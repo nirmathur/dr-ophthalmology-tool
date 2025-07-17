@@ -3,7 +3,7 @@
 
 This project started as a competition submission, but it’s grown into something I believe fills a real gap in AI for healthcare.
 
-It’s a lightweight, modular pipeline for diabetic retinopathy detection — designed for transparency, speed, and adaptability. It trains fast on cloud GPUs (I used Google Colab’s L100's), runs locally, and shows its reasoning via Grad-CAM.
+It’s a lightweight, modular pipeline for diabetic retinopathy detection, designed for transparency, speed, and adaptability. It trains fast on cloud GPUs (I used Google Colab’s L100's), runs locally, and shows its reasoning via Grad-CAM.
 
 Most DR models today are either black-box systems trained with massive compute or academic demos that never get deployed. This isn’t that. It’s for clinicians, students, and researchers who want a transparent foundation they can understand, customise, and trust, especially in environments where infrastructure is limited.
 
